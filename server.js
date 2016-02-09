@@ -9,7 +9,7 @@ var gameonAPIKey = '';
 
 // Room Details
 // Your room's name
-var theRoomName = 'ankCF3';
+var theRoomName = 'yourroomname';
 // The hostname of your CF applicaiton
 var endpointip = ('yourbluemixhostname' || 'localhost');
 // Automatically retrieves the port of your CF

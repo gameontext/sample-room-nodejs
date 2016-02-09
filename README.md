@@ -13,10 +13,12 @@ This walkthrough will guide you through adding a room to a running Game On! serv
 
 ### Installation prerequisites
 
-Gameon-room-go when deployed using containers requires:
+Gameon-room-nodejs when deployed using an instant runtime requires:
 
- - [Docker](https://docs.docker.com/engine/installation/) - You will need Docker on your host machine to create a docker image to be pushed to IBM Bluemix Containers
- - [IBM Containers CLI](https://www.ng.bluemix.net/docs/containers/container_cli_ov.html#container_cli_cfic_install)
+- [Bluemix account](https://console.ng.bluemix.net)
+- [IBM DevOps Services Account](https://hub.jazz.net/register)
+- [GitHub account](https://github.com/)
+
 
 ## Create Bluemix accounts and log in
 To build a Game On! room in Bluemix, you will first need a Bluemix account. 
@@ -35,76 +37,30 @@ For a new room to register with the Game On! server, you must first log into gam
 
 ## Getting the source code
 
-The source code is located on [GitHub](https://github.com/cfsworkload/).  Download the ZIP and unzip the code, or using the GitHub CLI clone the repository with
+The source code is located on GitHub, navigate to our [source code](https://github.com/cfsworkload/gameon-room-nodejs) and fork the project into your own repository.  
 
-    git clone https://github.com/cfsworkload/
+ 1. Navigate to [IBM DevOps](https://hub.jazz.net/)
+ 2. Click on **CREATE PROJECT**
+ 3. Select **Link to an existing GitHub repository**
+ 4. Select **Link to a Git Repo on GitHub**
+ 5. Click on the dropdown menu that appears, and choose your newly forked project.  
+ 6. Chose your **Region**, **Organization**, and **Space**.  Generally the defaults will be sufficient.
+ 7. Click **CREATE**.  The create button will fork your GitHub project into IBM DevOps services, and redirect you to your new project.  
 
 ## Updating Code with Game On! credentials
 
 ### Configure Node.js room
-For the Node.js room, the server.js file contains information about the new room and your user credentials. The user credentials must be set manually. 
 
-- **gameonAPIKey** - Use the ApiKey value from the game-on.org user settings page.
-- **gameonUID** : Use the Id value from the game-on.org user settings page.
-- **endpointip** : Use the IP requested or retrieved from earlier steps.
-- **port** : The default value is 3000. This port must be opened when running the container.
+Once you have created your new project, you will be able to configure the room to your liking.
 
-### Configure Go room
+ 1. From your [IBM DevOps](https://hub.jazz.net/) project, click **EDIT CODE** located in the top right corner of your project's overview page.
+ 2. Select the **server.js** file, you will have to adjust 4 values near the top of the file
+	 
+	 -  **gameonAPIKey** - Use the ApiKey value from the game-on.org user settings page.
+	 - **gameonUID** : Use the Id value from the game-on.org user settings page.
+	 - **endpointip** : This will be the hostname of your applicaiton.  By default it will be your projectname.mybluemix.net
+	 - **theRoomName**:  Name your room!
 
-
-
-## Make sure a public IP is available in your Bluemix space
-This solution requires a free public IP. In order to determine if a public IP is available, you need to find the number of used and your max quota of IP addresses allowed for your space.
-
-To find this information:
-
-1. Log into Bluemix at https://console.ng.bluemix.net.
-2. Select **DASHBOARD**.
-3. Select the space you where you would like your Wish List app to run.
-4. In the Containers tile, information about your IP addresses is listed.
-5. Check that the **Public IPs Requested** field has at least one available IP address.
-
-If you have an IP address available, you're ready to start building your Wish List app. If all of your IP addresses have been used, you will need to release one. In order to release a public IP, install the [IBM Containers CLI](https://www.ng.bluemix.net/docs/containers/container_cli_ov.html#container_cli_cfic_installs) plugin, which can be found at the website below.
-
-https://www.ng.bluemix.net/docs/containers/container_cli_ov.html#container_cli_cfic_installs
-
-Once installed:
-
-1. Log into your Bluemix account and space.
-
-  `cf ic login`  
-2. List your current external IP addresses.
-
-  `cf ic ip list`
-3. Release an IP address.
-
-  `cf ic ip release <public IP>`
+ 3. Press the Play button to deploy your application to Bluemix.
 
 
-## Game On! room on Containers
-To build a Game On! room on containers, you create the container locally in Docker using the provided Dockerfile set ups, and then push the container onto Bluemix.
-
-###Build the Docker container locally
-1.	Start Docker to run Docker commands. e.g. with the Docker QuickStart Terminal.
-2.	In the folder, build the container using run `docker build -t registry.ng.bluemix.net/<your_namespace>/<imageName> .`
-3.	To verify the image is now created, you can run `docker images`
-
-###Push and run on Bluemix
-1.	Make sure you are logged in with the `cf ic login` command.
-2.	Push the container to Bluemix using the command `docker push registry.ng.bluemix.net/<your_namespace>/<imageName>` using the same image name you used to create the local container.
-
-###Run the container on Bluemix
-1.	Use the following command to run the container, using the same image name you used to create the local container and port 3000 as the open port as set for the port variable in the server.js. 
-	`cf ic run -p <port>:<port> -m 256 -d registry.ng.bluemix.net/<your_namespace>/<imageName>`
-2.	With the resulting container ID, use that value to bind to the IP you got earlier with the command: 
-	`cf ic ip bind <IP> <Container ID>`
-
-###Accessing a running container
-To edit a file on a running container, you can log in to the container with the command 
-	`cf ic exec -it <Container ID> /bin/bash`
-Note: The container has been created with vim to allow editing. You may need this to edit the files in /usr/src/app.
-
-### Starting a room
-To start the room for your specific language run:
-	- Node.js: `node server.js &`
-	- Go: ./gameon-room-go -c <containerIP> -g <containerIP> -p <port> -r <RoomName>

@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "description": "node room",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+    "dependencies": {
+    "nodejs-websocket": "*",
+    "winston": "*"
+  },
+  "author": "",
+  "license": "ISC"
+}

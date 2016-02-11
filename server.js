@@ -36,7 +36,7 @@ var exits = [
 
 var registration = {
   "name": theRoomName,
-  "connctionDetails": {
+  "connectionDetails": {
     "type": "websocket",
     "target": "ws://"+ endpointip,
   },

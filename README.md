@@ -9,7 +9,7 @@ This application demonstrates how microservice architectures work from two point
 
 ##Introduction
 
-This walkthrough will guide you through adding a room to a running Game On! server.  You will be shown how to set up a container based room that is implemented in the Go programming language.  There are also instructions for deploying a similar room that is written in Node.js that is deployed as a Cloud Foundry application in Bluemix.  Both of these rooms take a microservice approach to adding a room to a running Game On! text adventure game server.  
+This walkthrough will guide you through adding a room to a running Game On! server.  You will be shown how to set up a Node.js room that is deployed as a Cloud Foundry application in Bluemix.  This room takes a microservice approach to adding a room to a running Game On! text adventure game server.  
 
 ### Installation prerequisites
 

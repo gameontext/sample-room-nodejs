@@ -3,15 +3,17 @@ var https = require("https");
 var crypto = require("crypto");
 var winston = require('winston');
 
+
 // User credentials
 var gameonUID = '';
 var gameonAPIKey = '';
 
 // Room Details
 // Your room's name
-var theRoomName = 'ankCF3';
+var theRoomName = '';
+var fullName = '';
 // The hostname of your CF applicaiton
-var endpointip = ('yourbluemixhostname' || 'localhost');
+var endpointip = ('' || 'localhost');
 // Automatically retrieves the port of your CF
 var port = (process.env.CF_INSTANCE_PORT || 3000);
 
@@ -34,18 +36,21 @@ var exits = [
 ]
 
 var registration = {
-  roomName: theRoomName,
-  exits: [
+  "fullName": fullName,
+  "name": theRoomName,
+  "connectionDetails": {
+    "type": "websocket",
+    "target": "ws://"+ endpointip,
+  },
+  "doors":
     {
-      name: "W",
-      room: "RecRoom",
-      description: "You see a door to the wally west that looks like it goes somewhere."
-    }
-  ],
-  attributes: {
-    endPoint: "ws://"+ endpointip,
-    startLocation: "true"
-  }
+      "n": "North",
+      "s": "South",
+      "e": "East",
+      "w": "West",
+      "u": "Up",
+      "d": "Down"
+    },
 }
 
 function register()
@@ -53,27 +58,42 @@ function register()
   logger.info("Registering with the concierge...")
 
   var body = JSON.stringify(registration)
-  var timestamp = new Date().getTime()
+  var now = new Date()
+  var timestamp = new Date(now - 65000).toISOString()
   var uidParams = 'id=' + gameonUID
   var queryParams = 'stamp=' + timestamp
+  logger.info("Now!: " + now)
   logger.info("Timestamp: " + timestamp)
   logger.info("Query Parameters: " + queryParams)
 
   logger.debug("Registration object: " + JSON.stringify(registration))
   
-  var allParams = uidParams + '&' + queryParams
+  var bodyHash = crypto.createHash('sha256')
+  bodyHash = bodyHash.update(body).digest('base64')
+  console.log("BODY HASH " + bodyHash)
 
+  var allParams = gameonUID+timestamp+bodyHash
   var hash = crypto.createHmac('sha256', gameonAPIKey).update(allParams).digest('base64')
+
+  console.log("HASH : " + hash)
+
+
 
   var options = {
     host: 'game-on.org',
-    path: '/concierge/registerRoom?' + allParams + '&apikey=' + encodeURIComponent(hash),
+    path: '/map/v1/sites',
     method: 'POST',
     headers: {
-      'Content-Type':'application/json'
+      'Content-Type':'application/json',
+      'gameon-id':gameonUID,
+      'gameon-date': timestamp,
+      'gameon-sig-body': bodyHash,
+      'gameon-signature': hash
     }
   };
   
+  logger.debug("Options: " + JSON.stringify(options))
+
   callback = function(response) {
     var str = ''
     response.on('data', function (chunk) {

@@ -11,6 +11,7 @@ var gameonAPIKey = '';
 // Room Details
 // Your room's name
 var theRoomName = '';
+var fullName = '';
 // The hostname of your CF applicaiton
 var endpointip = ('' || 'localhost');
 // Automatically retrieves the port of your CF
@@ -35,6 +36,7 @@ var exits = [
 ]
 
 var registration = {
+  "fullName": fullName,
   "name": theRoomName,
   "connectionDetails": {
     "type": "websocket",

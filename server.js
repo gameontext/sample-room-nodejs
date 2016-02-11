@@ -56,9 +56,11 @@ function register()
   logger.info("Registering with the concierge...")
 
   var body = JSON.stringify(registration)
-  var timestamp = new Date().toISOString()
+  var now = new Date()
+  var timestamp = new Date(now - 65000).toISOString()
   var uidParams = 'id=' + gameonUID
   var queryParams = 'stamp=' + timestamp
+  logger.info("Now!: " + now)
   logger.info("Timestamp: " + timestamp)
   logger.info("Query Parameters: " + queryParams)
 

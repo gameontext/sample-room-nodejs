@@ -48,8 +48,6 @@ Our source code is stored on GitHub. To fork the project into your own repositor
 
 ## Configure your room
 
-### Configure Node.js room
-
 Once you have created your new project, you will be able to configure the room to your liking.
 1. From your [IBM DevOps](https://hub.jazz.net/) project, click **EDIT CODE** at the upper right corner of your project's overview page.
 2. Select the **server.js** file. You will have to adjust 4 values near the top of the file

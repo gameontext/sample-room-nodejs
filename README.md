@@ -29,7 +29,7 @@ Sign up for Bluemix at https://console.ng.bluemix.net and DevOps Services at htt
 ## Get Game On! ID and Shared Secret
 For a new room to register with the Game On! server, you must first log into game-on.org and sign in using one of several methods to get your **Game On! ID** and **Shared Secret**.
 
-1.  Go to [https://game-on.org/](https://game-on.org/) and click **Play**
+1.  Go to [https://game-on.org/](https://game-on.org/) and click **Play**.
 2.  Select an authentication method and log in with your user name and password for that type.
 3.  Click the **Edit Profile** button at the upper right.
 4.  You should now see **Game On! ID** and **Shared Secret** near the bottom of the page.  (If necessary, refresh the page, or even log out and log back in, to generate your **Shared Secret**).  Please make note of your **Game On! ID** and **Shared Secret** for later in the walkthrough.
@@ -38,10 +38,10 @@ For a new room to register with the Game On! server, you must first log into gam
 
 Our source code is stored on GitHub. To fork the project into your own repository navigate to [https://github.com/cfsworkload/gameon-room-nodejs](https://github.com/cfsworkload/gameon-room-nodejs).
 
-1. Navigate to [IBM DevOps](https://hub.jazz.net/)
-2. Click **CREATE PROJECT**
-3. Select **Link to an existing GitHub repository**
-4. Select **Link to a Git Repo on GitHub**
+1. Navigate to [IBM DevOps](https://hub.jazz.net/).
+2. Click **CREATE PROJECT**.
+3. Select **Link to an existing GitHub repository**.
+4. Select **Link to a Git Repo on GitHub**.
 5. Choose your newly forked project from the dropdown menu that appears. 
 6. Choose your **Region**, **Organization**, and **Space**.  Generally the defaults will be sufficient.
 7. Click **CREATE**.  This will fork your GitHub project into IBM DevOps services, and redirect you to your new project.

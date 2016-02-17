@@ -6,14 +6,14 @@ var winston = require('winston');
 
 // User credentials
 var gameonUID = (process.env.GAMEONUID|| '');
-var gameonAPIKey = (process.env.GAMEONUID|| '');
+var gameonAPIKey = (process.env.GAMEONAPIKEY|| '');
 
 // Room Details
 // Your room's name
 var theRoomName = 'AnkUniqueCF - 2';
 var fullName = 'This is a CF in bluemix';
 // The hostname of your CF applicaiton
-var endpointip = ('unique-node-room-git.mybluemix.net' || 'localhost');
+var endpointip = ('yourhostname' || 'localhost');
 // Automatically retrieves the port of your CF
 var port = (process.env.CF_INSTANCE_PORT || 3000);
 
@@ -210,11 +210,11 @@ function parseCommand(conn, target, username, content) {
   else if (content.substr(1, 4) == "help")
   {
     sendHelp(conn, target, username)
-  }*/
+  }
   else if (content.substr(1, 9) == "inventory")
   {
     sendInventory(conn, target, username)
-  }
+  }*/
   else if (content.substr(1, 7) == "examine")
   {
     sendExamine(conn, target, username)
@@ -223,47 +223,6 @@ function parseCommand(conn, target, username, content) {
   {
     sendUnknownCommand(conn, target, content)
   }
-}
-
-function sendExits(conn, target, username)
-{
-  logger.debug("Target \"" + target + "\" asked for exits.")
-  var sendTarget = target
-  var sendMessageType = "player"
-  var messageObject = {
-    type: "exits",
-    bookmark: 2222,
-    content: {
-      W: "You see a door to the wally west that looks like it goes somewhere."
-    }
-  }
-
-  var messageToSend = sendMessageType + "," +
-            sendTarget + "," +
-            JSON.stringify(messageObject)
-
-  conn.sendText(messageToSend)
-}
-
-function sendHelp(conn, target, username)
-{
-  logger.debug("Target \"" + target + "\" asked for info.")
-  var sendTarget = target
-  var sendMessageType = "player"
-  var messageObject = {
-    type: "event",
-    bookmark: 2223,
-    content: {
-    }
-  }
-
-  messageObject.content[target] = "The following commands are supported: [/help, /go, /exits, /inventory, /examine]"
-
-  var messageToSend = sendMessageType + "," +
-            sendTarget + "," +
-            JSON.stringify(messageObject)
-
-  conn.sendText(messageToSend)
 }
 
 function sendInventory(conn, target, username)

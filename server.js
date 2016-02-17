@@ -40,8 +40,6 @@ var registration = {
       "s": "South",
       "e": "East",
       "w": "West",
-      "u": "Up",
-      "d": "Down"
     },
 }
 
@@ -59,7 +57,7 @@ function register()
   logger.info("Query Parameters: " + queryParams)
 
   logger.debug("Registration object: " + JSON.stringify(registration))
-  
+
   var bodyHash = crypto.createHash('sha256')
   bodyHash = bodyHash.update(body).digest('base64')
   console.log("BODY HASH " + bodyHash)
@@ -83,7 +81,7 @@ function register()
       'gameon-signature': hash
     }
   };
-  
+
   logger.debug("Options: " + JSON.stringify(options))
 
   callback = function(response) {
@@ -205,14 +203,14 @@ function parseCommand(conn, target, username, content) {
   {
     parseGoCommand(conn, target, username, content)
   }
-  else if (content.substr(1, 5) == "exits")
+  /*else if (content.substr(1, 5) == "exits")
   {
     sendExits(conn, target, username)
   }
   else if (content.substr(1, 4) == "help")
   {
     sendHelp(conn, target, username)
-  }
+  }*/
   else if (content.substr(1, 9) == "inventory")
   {
     sendInventory(conn, target, username)
@@ -313,31 +311,34 @@ function sendExamine(conn, target, username)
 function parseGoCommand(conn, target, username, content)
 {
   var exitName = content.substr(4)
+
   logger.info("Player \"" + username + "\" wants to go direction \"" + exitName + "\"")
 
-  var found = false
-  var myexit = {}
-  for (var j=0;j<exits.length;j++)
-  {
-    if (exits[j].name.toUpperCase() === exitName.toUpperCase() ||
-      exits[j].longName.toUpperCase() == exitName.toUpperCase())
-    {
-      found = true
-      myexit = exits[j]
-      break;
-    }
+
+  if(exitName.toUpperCase() === "NORTH"){
+    exitId = 'n'
+  }
+  else if(exitName.toUpperCase() == "SOUTH"){
+    exitId = 's'
+  }
+  else if(exitName.toUpperCase() == "EAST"){
+    exitId = 'e'
+  }
+  else if(exitName.toUpperCase() == "WEST"){
+    exitId = 'w'
   }
 
-  if (found)
-  {
+  logger.debug("Registration: " + registration.doors[exitId])
+
+  if(registration.doors[exitId]){
     logger.info("That direction exists, telling \"" + username + "\" that they've gone that direction.")
     var sendTarget = target
     var sendMessageType = "playerLocation"
     var messageObject = {
-      type: "exit",
-      exitId: myexit.name,
-      content: "You head " + myexit.longName,
-      bookmark: 97
+      "type": "exit",
+      "exitId": exitId,
+      "content": "You head " + exitName,
+      "bookmark": 6019
     }
 
     var messageText = sendMessageType + "," +
@@ -357,7 +358,7 @@ function parseGoCommand(conn, target, username, content)
       content: {
 
       },
-      bookmark: 1002
+      bookmark: 5302
     }
 
     messageObject.content[target] = "There isn't an exit with that name, genius."

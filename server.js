@@ -10,7 +10,7 @@ var gameonAPIKey = (process.env.GAMEONAPIKEY|| '');
 
 // Room Details
 // Your room's name
-var theRoomName = '';
+var theRoomName = (process.env.ROOM_NAME || '');
 var fullName = 'This is a CF in bluemix';
 // The hostname of your CF applicaiton
 var endpointip = ('yourhostname' || 'localhost');
@@ -210,11 +210,11 @@ function parseCommand(conn, target, username, content) {
   else if (content.substr(1, 4) == "help")
   {
     sendHelp(conn, target, username)
-  }*/
+  }
   else if (content.substr(1, 9) == "inventory")
   {
     sendInventory(conn, target, username)
-  }
+  }*/
   else if (content.substr(1, 7) == "examine")
   {
     sendExamine(conn, target, username)
@@ -223,47 +223,6 @@ function parseCommand(conn, target, username, content) {
   {
     sendUnknownCommand(conn, target, content)
   }
-}
-
-function sendExits(conn, target, username)
-{
-  logger.debug("Target \"" + target + "\" asked for exits.")
-  var sendTarget = target
-  var sendMessageType = "player"
-  var messageObject = {
-    type: "exits",
-    bookmark: 2222,
-    content: {
-      W: "You see a door to the wally west that looks like it goes somewhere."
-    }
-  }
-
-  var messageToSend = sendMessageType + "," +
-            sendTarget + "," +
-            JSON.stringify(messageObject)
-
-  conn.sendText(messageToSend)
-}
-
-function sendHelp(conn, target, username)
-{
-  logger.debug("Target \"" + target + "\" asked for info.")
-  var sendTarget = target
-  var sendMessageType = "player"
-  var messageObject = {
-    type: "event",
-    bookmark: 2223,
-    content: {
-    }
-  }
-
-  messageObject.content[target] = "The following commands are supported: [/help, /go, /exits, /inventory, /examine]"
-
-  var messageToSend = sendMessageType + "," +
-            sendTarget + "," +
-            JSON.stringify(messageObject)
-
-  conn.sendText(messageToSend)
 }
 
 function sendInventory(conn, target, username)

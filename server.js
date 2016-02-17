@@ -5,15 +5,15 @@ var winston = require('winston');
 
 
 // User credentials
-var gameonUID = '';
-var gameonAPIKey = '';
+var gameonUID = (process.env.GAMEONUID|| '');
+var gameonAPIKey = (process.env.GAMEONUID|| '');
 
 // Room Details
 // Your room's name
-var theRoomName = '';
-var fullName = '';
+var theRoomName = 'AnkUniqueCF - 2';
+var fullName = 'This is a CF in bluemix';
 // The hostname of your CF applicaiton
-var endpointip = ('' || 'localhost');
+var endpointip = ('unique-node-room-git.mybluemix.net' || 'localhost');
 // Automatically retrieves the port of your CF
 var port = (process.env.CF_INSTANCE_PORT || 3000);
 
@@ -26,14 +26,6 @@ var logger = new winston.Logger({
   ]
 });
 
-var exits = [
-  {
-    name: "W",
-    longName: "West",
-    room: "RecRoom",
-    description: "You see a door to the wally west that looks like it goes somewhere."
-  }
-]
 
 var registration = {
   "fullName": fullName,
@@ -59,7 +51,7 @@ function register()
 
   var body = JSON.stringify(registration)
   var now = new Date()
-  var timestamp = new Date(now - 65000).toISOString()
+  var timestamp = new Date(now - 75000).toISOString()
   var uidParams = 'id=' + gameonUID
   var queryParams = 'stamp=' + timestamp
   logger.info("Now!: " + now)
@@ -134,11 +126,12 @@ var wsServer = ws.createServer(function (conn) {
 
     logger.info("Parsed a message of type \"" + messageType + "\" sent to target \"" + target + "\".")
 
-    if (target != theRoomName)
-      return
+    //if (target != theRoomName)
+    //  return
 
     if (messageType === "roomHello")
     {
+      logger.debug("In roomHello")
       sayHello(conn, object.userId, object.username)
     }
     else if (messageType === "room")
@@ -416,17 +409,13 @@ function sayGoodbye(conn, target, username) {
 }
 
 function sayHello(conn, target, username) {
+
   logger.info("Saying hello to \"" + target + "\"")
   var responseObject = {
-      type: "location",
-      name: "The Node Room",
-      description: "This room is filled with little JavaScripts running around everywhere.",
-      exits: {
-        "W": "You see a door to the wally west that looks like it goes somewhere."
-      },
-      pockets: [],
-      objects: [],
-      bookmark: 5
+      "type": "location",
+      "name": theRoomName,
+      "fullName": fullName,
+      "description": "This room is filled with little JavaScripts running around everywhere.",
     }
 
     var sendMessageType = "player"

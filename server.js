@@ -6,7 +6,7 @@ var winston = require('winston');
 
 // User credentials
 var gameonUID = (process.env.GAMEONUID|| '');
-var gameonAPIKey = (process.env.GAMEONUID|| '');
+var gameonAPIKey = (process.env.GAMEONAPIKEY|| '');
 
 // Room Details
 // Your room's name

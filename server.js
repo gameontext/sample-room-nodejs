@@ -5,15 +5,15 @@ var winston = require('winston');
 
 
 // User credentials
-var gameonUID = '';
-var gameonAPIKey = '';
+var gameonUID = (process.env.GAMEONUID|| '');
+var gameonAPIKey = (process.env.GAMEONUID|| '');
 
 // Room Details
 // Your room's name
-var theRoomName = '';
-var fullName = '';
+var theRoomName = 'AnkUniqueCF - 2';
+var fullName = 'This is a CF in bluemix';
 // The hostname of your CF applicaiton
-var endpointip = ('' || 'localhost');
+var endpointip = ('yourhostname' || 'localhost');
 // Automatically retrieves the port of your CF
 var port = (process.env.CF_INSTANCE_PORT || 3000);
 
@@ -26,14 +26,6 @@ var logger = new winston.Logger({
   ]
 });
 
-var exits = [
-  {
-    name: "W",
-    longName: "West",
-    room: "RecRoom",
-    description: "You see a door to the wally west that looks like it goes somewhere."
-  }
-]
 
 var registration = {
   "fullName": fullName,
@@ -48,8 +40,6 @@ var registration = {
       "s": "South",
       "e": "East",
       "w": "West",
-      "u": "Up",
-      "d": "Down"
     },
 }
 
@@ -59,7 +49,7 @@ function register()
 
   var body = JSON.stringify(registration)
   var now = new Date()
-  var timestamp = new Date(now - 65000).toISOString()
+  var timestamp = new Date(now - 75000).toISOString()
   var uidParams = 'id=' + gameonUID
   var queryParams = 'stamp=' + timestamp
   logger.info("Now!: " + now)
@@ -67,7 +57,7 @@ function register()
   logger.info("Query Parameters: " + queryParams)
 
   logger.debug("Registration object: " + JSON.stringify(registration))
-  
+
   var bodyHash = crypto.createHash('sha256')
   bodyHash = bodyHash.update(body).digest('base64')
   console.log("BODY HASH " + bodyHash)
@@ -91,7 +81,7 @@ function register()
       'gameon-signature': hash
     }
   };
-  
+
   logger.debug("Options: " + JSON.stringify(options))
 
   callback = function(response) {
@@ -134,11 +124,12 @@ var wsServer = ws.createServer(function (conn) {
 
     logger.info("Parsed a message of type \"" + messageType + "\" sent to target \"" + target + "\".")
 
-    if (target != theRoomName)
-      return
+    //if (target != theRoomName)
+    //  return
 
     if (messageType === "roomHello")
     {
+      logger.debug("In roomHello")
       sayHello(conn, object.userId, object.username)
     }
     else if (messageType === "room")
@@ -212,14 +203,14 @@ function parseCommand(conn, target, username, content) {
   {
     parseGoCommand(conn, target, username, content)
   }
-  else if (content.substr(1, 5) == "exits")
+  /*else if (content.substr(1, 5) == "exits")
   {
     sendExits(conn, target, username)
   }
   else if (content.substr(1, 4) == "help")
   {
     sendHelp(conn, target, username)
-  }
+  }*/
   else if (content.substr(1, 9) == "inventory")
   {
     sendInventory(conn, target, username)
@@ -320,31 +311,34 @@ function sendExamine(conn, target, username)
 function parseGoCommand(conn, target, username, content)
 {
   var exitName = content.substr(4)
+
   logger.info("Player \"" + username + "\" wants to go direction \"" + exitName + "\"")
 
-  var found = false
-  var myexit = {}
-  for (var j=0;j<exits.length;j++)
-  {
-    if (exits[j].name.toUpperCase() === exitName.toUpperCase() ||
-      exits[j].longName.toUpperCase() == exitName.toUpperCase())
-    {
-      found = true
-      myexit = exits[j]
-      break;
-    }
+
+  if(exitName.toUpperCase() === "NORTH"){
+    exitId = 'n'
+  }
+  else if(exitName.toUpperCase() == "SOUTH"){
+    exitId = 's'
+  }
+  else if(exitName.toUpperCase() == "EAST"){
+    exitId = 'e'
+  }
+  else if(exitName.toUpperCase() == "WEST"){
+    exitId = 'w'
   }
 
-  if (found)
-  {
+  logger.debug("Registration: " + registration.doors[exitId])
+
+  if(registration.doors[exitId]){
     logger.info("That direction exists, telling \"" + username + "\" that they've gone that direction.")
     var sendTarget = target
     var sendMessageType = "playerLocation"
     var messageObject = {
-      type: "exit",
-      exitId: myexit.name,
-      content: "You head " + myexit.longName,
-      bookmark: 97
+      "type": "exit",
+      "exitId": exitId,
+      "content": "You head " + exitName,
+      "bookmark": 6019
     }
 
     var messageText = sendMessageType + "," +
@@ -364,7 +358,7 @@ function parseGoCommand(conn, target, username, content)
       content: {
 
       },
-      bookmark: 1002
+      bookmark: 5302
     }
 
     messageObject.content[target] = "There isn't an exit with that name, genius."
@@ -416,17 +410,13 @@ function sayGoodbye(conn, target, username) {
 }
 
 function sayHello(conn, target, username) {
+
   logger.info("Saying hello to \"" + target + "\"")
   var responseObject = {
-      type: "location",
-      name: "The Node Room",
-      description: "This room is filled with little JavaScripts running around everywhere.",
-      exits: {
-        "W": "You see a door to the wally west that looks like it goes somewhere."
-      },
-      pockets: [],
-      objects: [],
-      bookmark: 5
+      "type": "location",
+      "name": theRoomName,
+      "fullName": fullName,
+      "description": "This room is filled with little JavaScripts running around everywhere.",
     }
 
     var sendMessageType = "player"

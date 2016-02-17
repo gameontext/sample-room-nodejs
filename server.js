@@ -10,7 +10,7 @@ var gameonAPIKey = (process.env.GAMEONUID|| '');
 
 // Room Details
 // Your room's name
-var theRoomName = 'AnkUniqueCF - 2';
+var theRoomName = '';
 var fullName = 'This is a CF in bluemix';
 // The hostname of your CF applicaiton
 var endpointip = ('yourhostname' || 'localhost');

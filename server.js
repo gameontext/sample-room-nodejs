@@ -3,7 +3,6 @@ var https = require("https");
 var crypto = require("crypto");
 var winston = require('winston');
 
-
 // User credentials
 var gameonUID = (process.env.GAMEONUID|| '');
 var gameonAPIKey = (process.env.GAMEONAPIKEY|| '');
@@ -13,7 +12,7 @@ var gameonAPIKey = (process.env.GAMEONAPIKEY|| '');
 var theRoomName = (process.env.ROOM_NAME || '');
 var fullName = 'This is a CF in bluemix';
 // The hostname of your CF applicaiton
-var endpointip = ('yourhostname' || 'localhost');
+var endpointip = (JSON.parse(process.env.VCAP_APPLICATION).application_uris[0] || 'localhost')
 // Automatically retrieves the port of your CF
 var port = (process.env.CF_INSTANCE_PORT || 3000);
 

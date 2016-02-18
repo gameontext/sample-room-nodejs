@@ -10,7 +10,7 @@ var gameonAPIKey = (process.env.GAMEONAPIKEY|| '');
 // Room Details
 // Your room's name
 var theRoomName = (process.env.ROOM_NAME || '');
-var fullName = 'This is a CF in bluemix';
+var fullName = (process.env.FULL_NAME || '');
 // The hostname of your CF applicaiton
 var endpointip = (JSON.parse(process.env.VCAP_APPLICATION).application_uris[0] || 'localhost')
 // Automatically retrieves the port of your CF

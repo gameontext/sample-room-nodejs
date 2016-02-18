@@ -40,7 +40,7 @@ For a new room to register with the Game On! server, you must first log into gam
 
 Our source code is stored on GitHub. 
 
-1. Fork the project located in [GitHub](https://github.com/cfsworkload/gameon-room-nodejs) to your own GitHub repository.
+1. Head the project's [GitHub](https://github.com/cfsworkload/gameon-room-nodejs) repository and fork it to your own GitHub repository.
 2. Navigate to [IBM DevOps](https://hub.jazz.net/).
 3. Click **CREATE PROJECT**.
 4. Select **Link to an existing GitHub repository**.

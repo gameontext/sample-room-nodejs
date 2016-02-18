@@ -9,7 +9,9 @@ This application demonstrates how microservice architectures work from two point
 
 ##Introduction
 
-This walkthrough will guide you through adding a room to a running Game On! server.  You will be shown how to set up a Node.js room that is deployed as a Cloud Foundry application in Bluemix.  This room takes a microservice approach to adding a room to a running Game On! text adventure game server.  
+This solution explores microservice architectures via a text adventure game. You can learn more about Game On! at [http://game-on.org/](http://game-on.org/).
+
+This walkthrough will guide you through adding a room to a running Game On! microservices application.  You will be shown how to setup a Node.js room that is deployed as a Cloud Foundry application in Bluemix. 
 
 ### Installation prerequisites
 
@@ -36,19 +38,21 @@ For a new room to register with the Game On! server, you must first log into gam
 
 ## Getting the source code
 
-Our source code is stored on GitHub. To fork the project into your own repository navigate to [https://github.com/cfsworkload/gameon-room-nodejs](https://github.com/cfsworkload/gameon-room-nodejs).
+Our source code is stored on GitHub. 
 
-1. Navigate to [IBM DevOps](https://hub.jazz.net/).
-2. Click **CREATE PROJECT**.
-3. Select **Link to an existing GitHub repository**.
-4. Select **Link to a Git Repo on GitHub**.
-5. Choose your newly forked project from the dropdown menu that appears. 
-6. Choose your **Region**, **Organization**, and **Space**.  Generally the defaults will be sufficient.
-7. Click **CREATE**.  This will fork your GitHub project into IBM DevOps services, and redirect you to your new project.
+1. Head the project's [GitHub](https://github.com/cfsworkload/gameon-room-nodejs) repository and fork it to your own GitHub repository.
+2. Navigate to [IBM DevOps](https://hub.jazz.net/).
+3. Click **CREATE PROJECT**.
+4. Select **Link to an existing GitHub repository**.
+5. Select **Link to a Git Repo on GitHub**.
+6. Choose your newly forked project from the dropdown menu that appears. 
+7. Choose your **Region**, **Organization**, and **Space**.  Generally the defaults will be sufficient.
+8. Click **CREATE**.  This will fork your GitHub project into IBM DevOps services, and redirect you to your new project.
 
 ## Configure your room
 
 Once you have created your new project, you will be able to configure the room to your liking.
+
 1. From your [IBM DevOps](https://hub.jazz.net/) project, click **EDIT CODE** at the upper right corner of your project's overview page.
 2. Select the **server.js** file. You will have to adjust 4 values near the top of the file
 	 

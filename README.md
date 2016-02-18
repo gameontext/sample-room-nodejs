@@ -9,7 +9,9 @@ This application demonstrates how microservice architectures work from two point
 
 ##Introduction
 
-This walkthrough will guide you through adding a room to a running Game On! server.  You will be shown how to set up a Node.js room that is deployed as a Cloud Foundry application in Bluemix.  This room takes a microservice approach to adding a room to a running Game On! text adventure game server.  
+This solution explores microservice architectures via a text adventure game. You can learn more about Game On! at [http://game-on.org/](http://game-on.org/).
+
+This walkthrough will guide you through adding a room to a running Game On! microservices application.  You will be shown how to setup a Node.js room that is deployed as a Cloud Foundry application in Bluemix. 
 
 ### Installation prerequisites
 

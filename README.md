@@ -1,26 +1,22 @@
 # Microservices with a Game On! Room
-[Game On!](https://game-on.org/) is both a sample microservices application, and a throwback text adventure brought to you by the wasdev team at IBM.
+[Game On!](https://game-on.org/) is both a sample microservices application, and a throwback text adventure brought to you by the wasdev team at IBM. This application demonstrates how microservice architectures work from two points of view:
 
-This application demonstrates how microservice architectures work from two points of view:
+1. As a Player: navigate through a network/maze of rooms, where each room is a unique implementation of a common API. Each room supports chat, and interaction with items (some of which may be in the room, some of which might be separately defined services as well).
+2. As a Developer: learn about microservice architectures and their supporting infrastructure by extending the game with your own services. Write additional rooms or items and see how they interact with the rest of the system.
 
-1. As a Player: Navigate through a network/maze of rooms, where each room is a unique implementation of a common API. Each room supports chat, and interaction with items (some of which may be in the room, some of which might be separately defined services as well).
-2. As a Developer: Learn about microservice architectures and their supporting infrastructure by extending the game with your own services. Write additional rooms or items and see how they interact with the rest of the system.
-
+You can learn more about Game On! at [http://game-on.org/](http://game-on.org/).
 
 ##Introduction
-
-This solution explores microservice architectures via a text adventure game. You can learn more about Game On! at [http://game-on.org/](http://game-on.org/).
 
 This walkthrough will guide you through adding a room to a running Game On! microservices application.  You will be shown how to setup a Node.js room that is deployed as a Cloud Foundry application in Bluemix.
 
 ### Installation prerequisites
 
-Gameon-room-nodejs when deployed using an instant runtime requires:
+When deployed using an instant runtime, Gameon-room-nodejs requires:
 
 - [Bluemix account](https://console.ng.bluemix.net)
 - [IBM DevOps Services Account](https://hub.jazz.net/register)
 - [GitHub account](https://github.com/)
-
 
 ## Create Bluemix accounts and log in
 To build a Game On! room in Bluemix, you will first need a Bluemix account.
@@ -29,12 +25,12 @@ To build a Game On! room in Bluemix, you will first need a Bluemix account.
 Sign up for Bluemix at https://console.ng.bluemix.net and DevOps Services at https://hub.jazz.net. When you sign up, you'll create an IBM ID, create an alias, and register with Bluemix.
 
 ## Get Game On! ID and Shared Secret
-For a new room to register with the Game On! server, you must first log into game-on.org and sign in using one of several methods to get your **Game On! ID** and **Shared Secret**.
+For a new room to register with the Game On! application, you must first log into game-on.org and sign in using one of several methods to get your **Game On! ID** and **Shared Secret**.
 
-1.  Go to [https://game-on.org/](https://game-on.org/) and click **Play**.
+1.  Go to [https://game-on.org/](https://game-on.org/) and click **Enter**.
 2.  Select an authentication method and log in with your user name and password for that type.
 3.  View your user profile using the link in the top right.  It is either your username or a person icon.
-4.  You should now see **Game On! ID** and **Shared Secret** near the bottom of the page.  (If necessary, refresh the page, or even log out and log back in, to generate your **Shared Secret**).  Please make note of your **Game On! ID** and **Shared Secret** for later in the walkthrough.
+4.  You should now see your **Game On! ID** and **Shared Secret** near the bottom of the page.
 
 ## Getting the source code
 
@@ -67,7 +63,7 @@ Once you have created your new project, you will be able to configure the room t
 
 
 ## Access room on Game On!
-Once the room is set up and it has registered with the server, it will be accessible on [Game On!](https://game-on.org/). It may take a moment for the room to appear.
+Once the room is set up and it has registered with the application, it will be accessible on [Game On!](https://game-on.org/). It may take a moment for the room to appear.
 
 1. Log in to [Game On!](https://game-on.org/) using the authentication method you used to create your user ID and shared secret for the registered room.
 2. Use the Game On! command `/listmyrooms` from The First Room, to see your list of rooms. Once your room is registered, it will appear in that list.

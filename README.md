@@ -39,14 +39,14 @@ Our source code is stored on GitHub.
 1. Go to the project's [GitHub](https://github.com/cfsworkload/gameon-room-nodejs) repository and fork it to your own GitHub repository.
 2. Navigate to [IBM DevOps](https://hub.jazz.net/).
 3. Click **CREATE PROJECT**.
-4. Enter a name for your Project
+4. Enter a name for your Project.
 5. Select **Link to an existing GitHub repository**.
 6. Select **Link to a Git Repo on GitHub**.
 7. Choose your newly forked project from the dropdown menu that appears.
 8. Choose your **Region**, **Organization**, and **Space**.  Generally the defaults will be sufficient.
 9. Click **CREATE**.  This will fork your GitHub project into IBM DevOps services, and redirect you to your new project.
 
-## Setup Environment Variables
+## Setup environment variables
 
 Once you have created your new project, you will be able to configure the room to your liking.
 

@@ -63,11 +63,12 @@ Once you have created your new project, you will be able to configure the room t
 
 
 ## Access room on Game On!
-Once the room is set up and it has registered with the application, it will be accessible on [Game On!](https://game-on.org/). It may take a moment for the room to appear.
+Once the room is set up and it has registered with Game On!, it will be accessible on [Game On!](https://game-on.org/). It may take a moment for the room to appear.
 
 1. Log in to [Game On!](https://game-on.org/) using the authentication method you used to create your user ID and shared secret for the registered room.
 2. Use the Game On! command `/listmyrooms` from The First Room, to see your list of rooms. Once your room is registered, it will appear in that list.
-3. To get to your room, navigate through the network or go directly to it using the `/teleport` command from The First Room.
+3. To get to your room, navigate through the network or go directly there by using the `/teleport` command from The First Room.
+4. Look at the Bluemix log console to see "A new connection has been made to the room" command from The First Room.
 
 ### List of host provided commands
 The Game On! host provides a set a universal commands:
@@ -76,4 +77,4 @@ The Game On! host provides a set a universal commands:
 - **/sos** - Go back to The First Room.
 
 ### The First Room commands
-The First Room is usually where new users will start in Game On!. From there, additional commands are available and maintained by the Game On!. For the list of current commands use the `/help` command.
+The First Room is usually where new users will start in Game On!. From there, additional commands are available and maintained by Game On!. For the list of current commands use the `/help` command.

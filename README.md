@@ -11,7 +11,7 @@ This application demonstrates how microservice architectures work from two point
 
 This solution explores microservice architectures via a text adventure game. You can learn more about Game On! at [http://game-on.org/](http://game-on.org/).
 
-This walkthrough will guide you through adding a room to a running Game On! microservices application.  You will be shown how to setup a Node.js room that is deployed as a Cloud Foundry application in Bluemix. 
+This walkthrough will guide you through adding a room to a running Game On! microservices application.  You will be shown how to setup a Node.js room that is deployed as a Cloud Foundry application in Bluemix.
 
 ### Installation prerequisites
 
@@ -23,7 +23,7 @@ Gameon-room-nodejs when deployed using an instant runtime requires:
 
 
 ## Create Bluemix accounts and log in
-To build a Game On! room in Bluemix, you will first need a Bluemix account. 
+To build a Game On! room in Bluemix, you will first need a Bluemix account.
 
 ### Sign up and log in to Bluemix and DevOps
 Sign up for Bluemix at https://console.ng.bluemix.net and DevOps Services at https://hub.jazz.net. When you sign up, you'll create an IBM ID, create an alias, and register with Bluemix.
@@ -33,35 +33,38 @@ For a new room to register with the Game On! server, you must first log into gam
 
 1.  Go to [https://game-on.org/](https://game-on.org/) and click **Play**.
 2.  Select an authentication method and log in with your user name and password for that type.
-3.  Click the **Edit Profile** button at the upper right.
+3.  View your user profile using the link in the top right.  It is either your username or a person icon.
 4.  You should now see **Game On! ID** and **Shared Secret** near the bottom of the page.  (If necessary, refresh the page, or even log out and log back in, to generate your **Shared Secret**).  Please make note of your **Game On! ID** and **Shared Secret** for later in the walkthrough.
 
 ## Getting the source code
 
-Our source code is stored on GitHub. 
+Our source code is stored on GitHub.
 
-1. Head the project's [GitHub](https://github.com/cfsworkload/gameon-room-nodejs) repository and fork it to your own GitHub repository.
+1. Go to the project's [GitHub](https://github.com/cfsworkload/gameon-room-nodejs) repository and fork it to your own GitHub repository.
 2. Navigate to [IBM DevOps](https://hub.jazz.net/).
 3. Click **CREATE PROJECT**.
-4. Select **Link to an existing GitHub repository**.
-5. Select **Link to a Git Repo on GitHub**.
-6. Choose your newly forked project from the dropdown menu that appears. 
-7. Choose your **Region**, **Organization**, and **Space**.  Generally the defaults will be sufficient.
-8. Click **CREATE**.  This will fork your GitHub project into IBM DevOps services, and redirect you to your new project.
+4. Enter a name for your Project
+5. Select **Link to an existing GitHub repository**.
+6. Select **Link to a Git Repo on GitHub**.
+7. Choose your newly forked project from the dropdown menu that appears.
+8. Choose your **Region**, **Organization**, and **Space**.  Generally the defaults will be sufficient.
+9. Click **CREATE**.  This will fork your GitHub project into IBM DevOps services, and redirect you to your new project.
 
-## Configure your room
+## Setup Environment Variables
 
 Once you have created your new project, you will be able to configure the room to your liking.
 
 1. From your [IBM DevOps](https://hub.jazz.net/) project, click **EDIT CODE** at the upper right corner of your project's overview page.
-2. Select the **server.js** file. You will have to adjust 4 values near the top of the file
-	 
-	 - **gameonAPIKey** - Use the ApiKey value from the game-on.org user settings page.
-	 - **gameonUID** : Use the ID value from the game-on.org user settings page.
-	 - **endpointip** : This will be the host name of your app, which by default will be your projectname.mybluemix.net
-	 - **theRoomName**:  Name your room!
+2. Click on the **Play** button found above the README, this will deploy your app to Bluemix.
+3. Click on **DASHBOARD** at the top right of the page to navigate to your [Bluemix](https://bluemix.net) dashboard.
+4. Select the newly deployed application which will be named after your project.
+5. Click **Environment Variables** on the left side of your application's Overview page.
+ - Click **ADD**, for **Name** enter GAMEONUID, and use the **Game On! ID** you got earlier for **Value**.
+ - Click **ADD**, for **Name** enter GAMEONAPIKEY, and use the **Shared Secret** you got earlier for **Value**.
+ - Click **ADD**, for **Name** enter ROOM_NAME, for **Value** enter what you'd like your room to be named.
+ - Click **ADD**, for **Name** enter FULL_NAME, for **Value** enter what you'd like your room's description to be.
+6. Click **SAVE**.
 
-3. Press Play to deploy your app to Bluemix.
 
 ## Access room on Game On!
 Once the room is set up and it has registered with the server, it will be accessible on [Game On!](https://game-on.org/). It may take a moment for the room to appear.

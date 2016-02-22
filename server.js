@@ -99,7 +99,6 @@ function register()
   req.end();
 }
 
-setInterval(register, 60000)
 register()
 
 var wsServer = ws.createServer(function (conn) {

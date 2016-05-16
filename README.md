@@ -1,4 +1,7 @@
 # Microservices with a Game On! Room
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/88c9a48c21544cffa2965cfa0def40bb)](https://www.codacy.com/app/gameontext/gameon-room-nodejs?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gameontext/gameon-room-nodejs&amp;utm_campaign=Badge_Grade)
+
 [Game On!](https://game-on.org/) is both a sample microservices application, and a throwback text adventure brought to you by the wasdev team at IBM. This application demonstrates how microservice architectures work from two points of view:
 
 1. As a Player: navigate through a network/maze of rooms, where each room is a unique implementation of a common API. Each room supports chat, and interaction with items (some of which may be in the room, some of which might be separately defined services as well).

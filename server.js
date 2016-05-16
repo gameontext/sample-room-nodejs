@@ -39,10 +39,10 @@ var registration = {
   },
   "doors":
     {
-      "n": "North",
-      "s": "South",
-      "e": "East",
-      "w": "West",
+      "n": "A big door",
+      "s": "A small door",
+      "e": "A wobbly door",
+      "w": "A round door",
     },
 }
 

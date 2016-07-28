@@ -39,7 +39,7 @@ For a new room to register with the Game On! application, you must first log int
 
 Our source code is stored on GitHub.
 
-1. Go to the project's [GitHub](https://github.com/cfsworkload/gameon-room-nodejs) repository and fork it to your own GitHub repository.
+1. Go to the project's [GitHub](https://github.com/gameontext/gameon-room-nodejs) repository and fork it to your own GitHub repository.
 2. Navigate to [IBM DevOps](https://hub.jazz.net/).
 3. Click **CREATE PROJECT**.
 4. Enter a name for your Project.
@@ -58,10 +58,12 @@ Once you have created your new project, you will be able to configure the room t
 3. Click on **DASHBOARD** at the top right of the page to navigate to your [Bluemix](https://bluemix.net) dashboard.
 4. Select the newly deployed application which will be named after your project.
 5. Click **Environment Variables** on the left side of your application's Overview page.
- - Click **ADD**, for **Name** enter GAMEONUID, and use the **Game On! ID** you got earlier for **Value**.
- - Click **ADD**, for **Name** enter GAMEONAPIKEY, and use the **Shared Secret** you got earlier for **Value**.
+6. Click on **USER-DEFINED** and then enter each of the following variables:
+ - Click **ADD**, for **Name** enter GAMEON_ID, and use the **Game On! ID** you got earlier for **Value**.
+ - Click **ADD**, for **Name** enter GAMEON_SECRET, and use the **Shared Secret** you got earlier for **Value**.
  - Click **ADD**, for **Name** enter ROOM_NAME, for **Value** enter what you'd like your room to be named.
- - Click **ADD**, for **Name** enter FULL_NAME, for **Value** enter what you'd like your room's description to be.
+ - Click **ADD**, for **Name** enter FULL_NAME, for **Value** enter what you'd like your room's full name to be.
+ - Click **ADD**, for **Name** enter DESCRIPTION, for **Value** enter what you'd like your room's description to be.
 6. Click **SAVE**.
 
 

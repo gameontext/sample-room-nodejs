@@ -8,14 +8,15 @@ var crypto = require("crypto");
 var winston = require('winston');
 
 // User credentials
-var gameonUID = (process.env.GAMEONUID|| '');
-var gameonAPIKey = (process.env.GAMEONAPIKEY|| '');
+var gameonUID = (process.env.GAMEON_ID|| '');
+var gameonSecret = (process.env.GAMEON_SECRET || '');
 
 // Room Details
 // Your room's name
 var theRoomName = (process.env.ROOM_NAME || '');
 var fullName = (process.env.FULL_NAME || '');
-// The hostname of your CF applicaiton
+var description = (process.env.DESCRIPTION || 'This room is filled with little JavaScripts running around everywhere.');
+// The hostname of your CF application
 var endpointip = (JSON.parse(process.env.VCAP_APPLICATION).application_uris[0] || 'localhost')
 // Automatically retrieves the port of your CF
 var port = (process.env.CF_INSTANCE_PORT || 3000);
@@ -33,6 +34,7 @@ var logger = new winston.Logger({
 var registration = {
   "fullName": fullName,
   "name": theRoomName,
+  "description": description,
   "connectionDetails": {
     "type": "websocket",
     "target": "ws://"+ endpointip,
@@ -48,59 +50,66 @@ var registration = {
 
 function register()
 {
-  logger.info("Registering with the concierge...")
-
-  var body = JSON.stringify(registration)
-  var now = new Date()
-  var timestamp = new Date(now - 75000).toISOString()
-  var uidParams = 'id=' + gameonUID
-  var queryParams = 'stamp=' + timestamp
-  logger.info("Now!: " + now)
-  logger.info("Timestamp: " + timestamp)
-  logger.info("Query Parameters: " + queryParams)
-
-  logger.debug("Registration object: " + JSON.stringify(registration))
-
-  var bodyHash = crypto.createHash('sha256')
-  bodyHash = bodyHash.update(body).digest('base64')
-  console.log("BODY HASH " + bodyHash)
-
-  var allParams = gameonUID+timestamp+bodyHash
-  var hash = crypto.createHmac('sha256', gameonAPIKey).update(allParams).digest('base64')
-
-  console.log("HASH : " + hash)
-
-
-
-  var options = {
-    host: 'game-on.org',
-    path: '/map/v1/sites',
-    method: 'POST',
-    headers: {
-      'Content-Type':'application/json',
-      'gameon-id':gameonUID,
-      'gameon-date': timestamp,
-      'gameon-sig-body': bodyHash,
-      'gameon-signature': hash
+  if (gameonUID !== '')
+  {
+    logger.info("Registering with the map service...")
+  
+    var body = JSON.stringify(registration)
+    var now = new Date()
+    var timestamp = new Date(now - 75000).toISOString()
+    var uidParams = 'id=' + gameonUID
+    var queryParams = 'stamp=' + timestamp
+    logger.info("Now!: " + now)
+    logger.info("Timestamp: " + timestamp)
+    logger.info("Query Parameters: " + queryParams)
+  
+    logger.debug("Registration object: " + JSON.stringify(registration))
+  
+    var bodyHash = crypto.createHash('sha256')
+    bodyHash = bodyHash.update(body).digest('base64')
+    console.log("BODY HASH " + bodyHash)
+  
+    var allParams = gameonUID+timestamp+bodyHash
+    var hash = crypto.createHmac('sha256', gameonSecret).update(allParams).digest('base64')
+  
+    console.log("HASH : " + hash)
+  
+  
+  
+    var options = {
+      host: 'game-on.org',
+      path: '/map/v1/sites',
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json',
+        'gameon-id':gameonUID,
+        'gameon-date': timestamp,
+        'gameon-sig-body': bodyHash,
+        'gameon-signature': hash
+      }
+    };
+  
+    logger.debug("Options: " + JSON.stringify(options))
+  
+    callback = function(response) {
+      var str = ''
+      response.on('data', function (chunk) {
+        str += chunk;
+      });
+  
+      response.on('end', function () {
+        logger.debug("Received response: " + str);
+      });
     }
-  };
-
-  logger.debug("Options: " + JSON.stringify(options))
-
-  callback = function(response) {
-    var str = ''
-    response.on('data', function (chunk) {
-      str += chunk;
-    });
-
-    response.on('end', function () {
-      logger.debug("Received response: " + str);
-    });
+    var req = https.request(options, callback);
+  
+    req.write(JSON.stringify(registration));
+    req.end();
   }
-  var req = https.request(options, callback);
-
-  req.write(JSON.stringify(registration));
-  req.end();
+  else
+  {
+    logger.info('Not registering as no valid config is available')
+  }
 }
 
 register()
@@ -377,7 +386,7 @@ function sayHello(conn, target, username) {
       "type": "location",
       "name": theRoomName,
       "fullName": fullName,
-      "description": "This room is filled with little JavaScripts running around everywhere.",
+      "description": description,
     }
 
     var sendMessageType = "player"

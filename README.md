@@ -64,7 +64,7 @@ Once you have created your new project, you will be able to configure the room t
  - Click **ADD**, for **Name** enter ROOM_NAME, for **Value** enter what you'd like your room to be named.
  - Click **ADD**, for **Name** enter FULL_NAME, for **Value** enter what you'd like your room's full name to be.
  - Click **ADD**, for **Name** enter DESCRIPTION, for **Value** enter what you'd like your room's description to be.
-6. Click **SAVE**.
+7. Click **SAVE**.
 
 
 ## Access room on Game On!

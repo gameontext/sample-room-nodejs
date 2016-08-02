@@ -17,10 +17,11 @@ var theRoomName = (process.env.ROOM_NAME || '');
 var fullName = (process.env.FULL_NAME || '');
 var description = (process.env.DESCRIPTION || 'This room is filled with little JavaScripts running around everywhere.');
 // The hostname of your CF application
-var endpointip = (JSON.parse(process.env.VCAP_APPLICATION).application_uris[0] || 'localhost')
+var vcapApplication = (process.env.VCAP_APPLICATION || '{}');
+var appUris = (vcapApplication.application_uris || ['localhost']);
+var endpointip = appUris[0];
 // Automatically retrieves the port of your CF
 var port = (process.env.CF_INSTANCE_PORT || 3000);
-
 
 var logger = new winston.Logger({
   level: 'debug',
@@ -29,7 +30,6 @@ var logger = new winston.Logger({
     new (winston.transports.File)({ filename: './access.log' })
   ]
 });
-
 
 var registration = {
   "fullName": fullName,
@@ -167,6 +167,14 @@ var wsServer = ws.createServer(function (conn) {
     logger.debug("Connection closed.")
   })
 }).listen(port);
+
+// Install a special handler to make sure ctrl-c on the command line stops the container
+process.on('SIGINT', function () {
+  wsServer.close(function () {
+    logger.info("The server is exiting");
+    process.exit(0);
+  });
+});
 
 function sendUnknownType(conn, target, username, messageType)
 {

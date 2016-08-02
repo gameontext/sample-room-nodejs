@@ -46,7 +46,7 @@ In production its likely that multiple instances of your service will exist. As 
 5.  Under the **Room** tab set the **Name**, **Full Name** and **Description**.
 6.  Under Connection, set the web socket url that your room will be avilable on. If you don't yet know this you can leave this blank and update it later.
 
-## Deployign as a Cloud Foundry app
+## Deploying as a Cloud Foundry app
 
 ### Getting the source code
 

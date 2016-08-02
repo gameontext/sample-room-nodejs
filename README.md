@@ -35,6 +35,18 @@ For a new room to register with the Game On! application, you must first log int
 3.  View your user profile using the link in the top right.  It is either your username or a person icon.
 4.  You should now see your **Game On! ID** and **Shared Secret** near the bottom of the page.
 
+## Registering your room
+
+In production its likely that multiple instances of your service will exist. As a result of this, by default the sample rooms do not register themselves (you need to provide the GAMEON_ID and GAMEON_SECRET to do this). The preferred way to register a room is either via the [command line regutil tool](https://github.com/gameontext/regutil) or via the interactive map. Below are the instructions for using the interactive map to register a new room in GameOn!.
+
+1.  Go to the [interactive map service](https://game-on.org/interactivemap)
+2.  Under **Tools**, select **Room Developer**.
+3.  Set your Game On! id and Shared Secret fields that you obtained in the steps above, and then close the window.
+4.  From the **Tools** menu again, select **Create new room**.
+5.  Under the **Room** tab set the **Name**, **Full Name** and **Description**.
+6.  Under Connection, set the web socket url that your room will be avilable on. If you don't yet know this you can leave this blank and update it later.
+
+
 ## Getting the source code
 
 Our source code is stored on GitHub.
@@ -59,11 +71,12 @@ Once you have created your new project, you will be able to configure the room t
 4. Select the newly deployed application which will be named after your project.
 5. Click **Environment Variables** on the left side of your application's Overview page.
 6. Click on **USER-DEFINED** and then enter each of the following variables:
- - Click **ADD**, for **Name** enter GAMEON_ID, and use the **Game On! ID** you got earlier for **Value**.
- - Click **ADD**, for **Name** enter GAMEON_SECRET, and use the **Shared Secret** you got earlier for **Value**.
  - Click **ADD**, for **Name** enter ROOM_NAME, for **Value** enter what you'd like your room to be named.
  - Click **ADD**, for **Name** enter FULL_NAME, for **Value** enter what you'd like your room's full name to be.
  - Click **ADD**, for **Name** enter DESCRIPTION, for **Value** enter what you'd like your room's description to be.
+**Please Note:** If you want to register your room directly from here you can do this by setting the following additional environment variables:
+ - Click **ADD**, for **Name** enter GAMEON_ID, and use the **Game On! ID** you got earlier for **Value**.
+ - Click **ADD**, for **Name** enter GAMEON_SECRET, and use the **Shared Secret** you got earlier for **Value**.
 7. Click **SAVE**.
 
 

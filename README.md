@@ -46,8 +46,9 @@ In production its likely that multiple instances of your service will exist. As 
 5.  Under the **Room** tab set the **Name**, **Full Name** and **Description**.
 6.  Under Connection, set the web socket url that your room will be avilable on. If you don't yet know this you can leave this blank and update it later.
 
+## Deployign as a Cloud Foundry app
 
-## Getting the source code
+### Getting the source code
 
 Our source code is stored on GitHub.
 
@@ -61,7 +62,7 @@ Our source code is stored on GitHub.
 8. Choose your **Region**, **Organization**, and **Space**.  Generally the defaults will be sufficient.
 9. Click **CREATE**.  This will fork your GitHub project into IBM DevOps services, and redirect you to your new project.
 
-## Setup environment variables
+### Setup environment variables
 
 Once you have created your new project, you will be able to configure the room to your liking.
 
@@ -79,6 +80,28 @@ Once you have created your new project, you will be able to configure the room t
  - Click **ADD**, for **Name** enter GAMEON_SECRET, and use the **Shared Secret** you got earlier for **Value**.
 7. Click **SAVE**.
 
+## Deploy to IBM Container service
+
+##### Installation prerequisites
+
+1. [Cloud foundry API](https://github.com/cloudfoundry/cli/releases)
+2. [Install the IBM Containers plugin](https://console.ng.bluemix.net/docs/containers/container_cli_cfic_install.html)
+
+##### Deploying
+
+1. Log in to the IBM container service. This needs to be done in two stages:
+  1. Log into the Cloud Foundry CLI using `cf login`. Ypu will need to specify the API endpoint as `api.ng.bluemix.net` for the US South server, or `api.eu-gb.bluemix.net` for the UK server.
+  2. After this run the command `cf ic login`. This will perform the authentication to the IBM Container Service.
+2. Build the container in the Bluemix registry by running the command  `cf ic build -t gonode .` from the root of the project.
+3. Run `cf ic images` and check your image is available.
+4. Start the container by running the command `cf ic run -p 3000 --name gonode <registry>/<namespace>/gonode`. You can find the full path from the output of `cf ic images`. An example would be:
+```
+cf ic run -p 3000 --name gonode registry.ng.bluemix.net/pavittr/gonode
+```
+5. While you are waiting for the container to start, request a public IP address using the command `cf ic ip request`. This will return you a public IP address you can bind to your container.
+6. With the returned IP address, bind it using the command `cf ic ip bind <ip address> gonode`.
+7. Issue `cf ic ps`, and wait for your container to go from "Networking" to "Running".
+8. You should now be able to access your room from GameOn!
 
 ## Access room on Game On!
 Once the room is set up and it has registered with Game On!, it will be accessible on [Game On!](https://game-on.org/). It may take a moment for the room to appear.

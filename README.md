@@ -87,7 +87,7 @@ Once you have created your new project, you will be able to configure the room t
 1. [Cloud foundry API](https://github.com/cloudfoundry/cli/releases)
 2. [Install the IBM Containers plugin](https://console.ng.bluemix.net/docs/containers/container_cli_cfic_install.html)
 
-##### Deploying
+##### Deploying as a single container
 
 1. Log in to the IBM container service. This needs to be done in two stages:
   1. Log into the Cloud Foundry CLI using `cf login`. Ypu will need to specify the API endpoint as `api.ng.bluemix.net` for the US South server, or `api.eu-gb.bluemix.net` for the UK server.
@@ -95,13 +95,29 @@ Once you have created your new project, you will be able to configure the room t
 2. Build the container in the Bluemix registry by running the command  `cf ic build -t gonode .` from the root of the project.
 3. Run `cf ic images` and check your image is available.
 4. Start the container by running the command `cf ic run -p 3000 --name gonode <registry>/<namespace>/gonode`. You can find the full path from the output of `cf ic images`. An example would be:
-```
-cf ic run -p 3000 --name gonode registry.ng.bluemix.net/pavittr/gonode
-```
+
+  `cf ic run -p 3000 --name gonode registry.ng.bluemix.net/pavittr/gonode`
+
 5. While you are waiting for the container to start, request a public IP address using the command `cf ic ip request`. This will return you a public IP address you can bind to your container.
 6. With the returned IP address, bind it using the command `cf ic ip bind <ip address> gonode`.
 7. Issue `cf ic ps`, and wait for your container to go from "Networking" to "Running".
 8. You should now be able to access your room from GameOn!
+
+#### Deploy as a container group
+
+Instead of deploying a container as a single instance, you can instead deploy a container group. A container group can be used to deploy multiple instances of the same container and load balance between them.
+
+1. Log in to the IBM container service. This needs to be done in two stages:
+  1. Log into the Cloud Foundry CLI using `cf login`. Ypu will need to specify the API endpoint as `api.ng.bluemix.net` for the US South server, or `api.eu-gb.bluemix.net` for the UK server.
+  2. After this run the command `cf ic login`. This will perform the authentication to the IBM Container Service.
+2. Run `cf ic images` and check the `gonode` image is available. If not, run the command `cf ic build -t gonode .` from the root of the project to create it.
+3. Create the container group by running `cf ic group create -p 3000 -n <appName> --name gonodegroup <registry>/<namespace>/gonode`. You can find the full path from the output of `cf ic images`. An example would be:
+
+  `cf ic group create -p 3000 --name gonodegroup registry.ng.bluemix.net/pavittr/gonode`
+
+4. Run the command ` cf ic route map -n <appHost> -d mybluemix.net  gonodegroup`. This will make your containers available at <appHost>.mybluemix.net.
+5. Run the command `cf ic group instances gonodegroup` to check the status of your instances. Once they are in "Running" state your group is ready to use.
+6. You will now be able to access the web socket of your room on `http://<appName>.mybluemix.net`
 
 ## Access room on Game On!
 Once the room is set up and it has registered with Game On!, it will be accessible on [Game On!](https://game-on.org/). It may take a moment for the room to appear.

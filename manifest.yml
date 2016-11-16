@@ -2,7 +2,7 @@ applications:
 - path: .
   memory: 256M
   instances: 1
-  domain: mybluemix.net 
-  name: kilian-node-room
-  host: kilian-node-room
+  domain: mybluemix.net
+  name: node-room
+  host: node-room
   disk_quota: 1024M

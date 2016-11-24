@@ -2,5 +2,3 @@ applications:
 - path: .
   memory: 256M
   instances: 1
-  host: node-room
-  disk_quota: 1024M

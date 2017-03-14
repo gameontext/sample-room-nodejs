@@ -28,7 +28,7 @@ var register = function(gameonUID, gameonSecret, registration, logger)
     console.log("HASH : " + hash)
 
     var options = {
-      host: 'game-on.org',
+      host: 'gameontext.org',
       path: '/map/v1/sites',
       method: 'POST',
       headers: {

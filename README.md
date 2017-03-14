@@ -2,12 +2,12 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/88c9a48c21544cffa2965cfa0def40bb)](https://www.codacy.com/app/gameontext/gameon-room-nodejs?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gameontext/gameon-room-nodejs&amp;utm_campaign=Badge_Grade)
 
-[Game On!](https://game-on.org/) is both a sample microservices application, and a throwback text adventure brought to you by the wasdev team at IBM. This application demonstrates how microservice architectures work from two points of view:
+[Game On!](https://gameontext.org/) is both a sample microservices application, and a throwback text adventure brought to you by the wasdev team at IBM. This application demonstrates how microservice architectures work from two points of view:
 
 1. As a Player: navigate through a network/maze of rooms, where each room is a unique implementation of a common API. Each room supports chat, and interaction with items (some of which may be in the room, some of which might be separately defined services as well).
 2. As a Developer: learn about microservice architectures and their supporting infrastructure by extending the game with your own services. Write additional rooms or items and see how they interact with the rest of the system.
 
-You can learn more about Game On! at [http://game-on.org/](http://game-on.org/).
+You can learn more about Game On! at [http://gameontext.org/](http://gameontext.org/).
 
 ##Introduction
 
@@ -39,7 +39,7 @@ To register your room you need the websocket endpoint. This will vary depending 
 
 Use the Edit Rooms dialog in Game On! to register your room:
 
-1.  Go to [GameOn](https://game-on.org) and sign in.
+1.  Go to [GameOn](https://gameontext.org) and sign in.
 2.  Once you are signed in, go to the top right of the browser window and click on your username (or person icon).
 3.  From this window, again click the top right panel to select **Edit rooms**.
 4.  Under **Select or create a room**, make sure **create a room** is selected from the dropdown.

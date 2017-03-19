@@ -6,7 +6,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "nodejs-websocket": "*",
     "serve-static": "^1.11.2",
     "websocket": "^1.0.24",
     "winston": "*"

@@ -14,7 +14,7 @@ var sendUnknownCommand = function(conn, target, content, logger) {
                   sendTarget + "," +
                   JSON.stringify(responseObject)
 
-    conn.sendText(messageText)
+    conn.sendUTF(messageText)
 }
 
 module.exports = sendUnknownCommand;

@@ -35,7 +35,7 @@ var parseGoCommand = function(conn, target, username, content, doors, logger)
               sendTarget + "," +
               JSON.stringify(messageObject)
 
-    conn.sendText(messageText)
+    conn.sendUTF(messageText)
 
   }
   else
@@ -57,7 +57,7 @@ var parseGoCommand = function(conn, target, username, content, doors, logger)
               sendTarget + "," +
               JSON.stringify(messageObject)
 
-    conn.sendText(messageText)
+    conn.sendUTF(messageText)
   }
 
 }

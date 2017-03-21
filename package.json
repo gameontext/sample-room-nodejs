@@ -1,14 +1,18 @@
 {
   "version": "1.0.0",
-  "description": "node room",
+  "description": "Game On! node.js room",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-    "dependencies": {
-    "nodejs-websocket": "*",
+  "dependencies": {
+    "serve-static": "^1.11.2",
+    "finalhandler": "1.0.0",
+    "websocket": "^1.0.24",
     "winston": "*"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+  }
 }

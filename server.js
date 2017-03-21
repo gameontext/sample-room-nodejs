@@ -42,6 +42,10 @@ var logger = new winston.Logger({
     ]
 });
 
+function logerror (err) {
+  console.error(err.stack || err.toString())
+}
+
 // Serve up public folder
 var serve = serveStatic('public')
 
@@ -55,10 +59,6 @@ var httpServer = http.createServer(function(req, res) {
   }
 
 }).listen(port);
-
-function logerror (err) {
-  console.error(err.stack || err.toString())
-}
 
 //Create websocket
 var wsServer = new WebSocketServer({

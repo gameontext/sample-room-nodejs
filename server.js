@@ -3,10 +3,10 @@
 // Version 2.0, a copy of which can be found in the LICENSE file.
 
 var WebSocketServer = require('websocket').server;
-var WebSocketRouter = require('websocket').router;
 
 var http = require('http');
 var serveStatic = require('serve-static')
+var finalhandler = require('finalhandler')
 var winston = require('winston');
 
 //Ws functions
@@ -47,8 +47,12 @@ var serve = serveStatic('public')
 
 //Serve up static files (index page & supporting CLI-side JS)
 var httpServer = http.createServer(function(req, res) {
-
-  serve(req, res, finalhandler(req, res, {onerror: logerror}));
+  if (req.url === '/health') {
+      res.writeHead(200);
+      res.end("OK");
+  } else {
+      serve(req, res, finalhandler(req, res, {onerror: logerror}));
+  }
 
 }).listen(port);
 
@@ -61,10 +65,6 @@ var wsServer = new WebSocketServer({
     httpServer: httpServer,
     autoAcceptConnections: false
 });
-
-// Create a router
-var router = new WebSocketRouter();
-router.attachServer(wsServer);
 
 function originIsAllowed(origin) {
     // Logic to determine if this origin is allowed
@@ -80,43 +80,47 @@ wsServer.on('request', function(request) {
         request.reject();
         logger.debug("Connection from origin " + request.origin + "rejected.");
         return;
-    }
+    };
     var conn = request.accept();
-    conn.on("text", function(incoming) {
-        logger.debug("RECEIVED: " + incoming)
-        var typeEnd = incoming.indexOf(',')
-        var targetEnd = incoming.indexOf(',', typeEnd + 1)
+    conn.on('message', function(message) {
+        if (message.type === 'utf8') {
+            var incoming = message.utf8Data;
+            logger.debug("RECEIVED: " + incoming)
+            var typeEnd = incoming.indexOf(',')
+            var targetEnd = incoming.indexOf(',', typeEnd + 1)
 
-        var messageType = incoming.substr(0, typeEnd)
-        var target = incoming.substr(typeEnd + 1, targetEnd - typeEnd - 1)
-        var objectStr = incoming.substr(targetEnd + 1)
-        var object = {}
-        try {
-            object = JSON.parse(objectStr)
-        } catch (err) {
-            logger.error("Got improper json: " + objectStr)
-        }
-
-        logger.info("Parsed a message of type \"" + messageType + "\" sent to target \"" + target + "\".")
-
-        //if (target != theRoomName)
-        //  return
-
-        if (messageType === "roomHello") {
-            logger.debug("In roomHello")
-            sayHello(conn, object.userId, object.username)
-        } else if (messageType === "room") {
-            if (object.content.indexOf('/') == 0) {
-                parseCommand(conn, object.userId, object.username, object.content)
-            } else {
-                logger.info(object.username + " sent chat message \"" + object.content + "\"")
-                broadcast(prepareChatMessage(conn, object.username, object.content));
+            var messageType = incoming.substr(0, typeEnd)
+            console.log("MessageType is " + messageType);
+            var target = incoming.substr(typeEnd + 1, targetEnd - typeEnd - 1)
+            var objectStr = incoming.substr(targetEnd + 1)
+            var object = {}
+            try {
+                object = JSON.parse(objectStr)
+            } catch (err) {
+                logger.error("Got improper json: " + objectStr)
             }
-        } else if (messageType === "roomGoodbye") {
-            logger.debug("Announcing that \"" + username + "\" has left the room.")
-            broadcast(prepareGoodbyeMessage(conn, object.userId, object.username))
-        } else {
-            sendUnknownType(conn, object.userId, object.username, messageType, logger);
+
+            logger.info("Parsed a message of type \"" + messageType + "\" sent to target \"" + target + "\".")
+
+            //if (target != theRoomName)
+            //  return
+
+            if (messageType === "roomHello") {
+                logger.debug("In roomHello")
+                sayHello(conn, object.userId, object.username)
+            } else if (messageType === "room") {
+                if (object.content.indexOf('/') == 0) {
+                    parseCommand(conn, object.userId, object.username, object.content)
+                } else {
+                    logger.info(object.username + " sent chat message \"" + object.content + "\"")
+                    broadcast(prepareChatMessage(conn, object.username, object.content));
+                }
+            } else if (messageType === "roomGoodbye") {
+                logger.debug("Announcing that \"" + object.username + "\" has left the room.")
+                broadcast(prepareGoodbyeMessage(conn, object.userId, object.username))
+            } else {
+                sendUnknownType(conn, object.userId, object.username, messageType, logger);
+            }
         }
     });
     conn.on("close", function(code, reason) {
@@ -170,7 +174,7 @@ function sayHello(conn, target, username) {
         sendTarget + "," +
         JSON.stringify(responseObject)
 
-    conn.sendText(messageText)
+    conn.sendUTF(messageText)
 
     logger.debug("And announcing that \"" + username + "\" has arrived.")
     var broadcastMessageType = "player"
@@ -191,7 +195,7 @@ function sayHello(conn, target, username) {
 
 function broadcast(message) {
     wsServer.connections.forEach(function(conn) {
-        conn.sendText(message)
+        conn.sendUTF(message)
     })
 }
 

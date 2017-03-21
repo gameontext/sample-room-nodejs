@@ -13,7 +13,7 @@ You can learn more about Game On! at [http://gameontext.org/](http://gameontext.
 
 This walkthrough will guide you through creating and deploying a simple room (a microservice) to the running Game On! application using Node.js.
 
-The microservice can be (a) deployed as a Cloud Foundry application or (b) built into a docker container.
+The microservice can be (a) deployed as a Cloud Foundry application or (b) built into a Docker container.
 
 Game On! communicates with this service (a room) over WebSockets using the [Game On! WebSocket protocol](https://book.gameontext.org/microservices/WebSocketProtocol.html). Consider this a stand-in for asynchronous messaging like MQTT, which requires a lot more setup than a simple WebSocket does.
 
@@ -32,7 +32,7 @@ Node 6.3.1 is used by the Dockerfile. You can use newer, but be sure to update t
 2. `npm install`
 3. `npm start`
 
-After running this, the server will be running locally at [http://localhost:9080/](http://localhost:3000/).
+After running this, the server will be running locally at [http://localhost:3000/](http://localhost:3000/).
 * Visiting this page provides a small form you can use to test the WebSocket endpoint in your service directly.
 * A health URL is also defined by the service, at http://localhost:3000/health
 
@@ -40,14 +40,12 @@ After running this, the server will be running locally at [http://localhost:9080
 
 For Game On! to include your room, you need to tell it where the publicly reachable WebSocket endpoint is. This usually requires two steps:
 
-* [**hosting your service somewhere with a publicly reachable endpoint**](https://book.game-on.org/walkthroughs/createRoom.html#_deploy_your_room_to_a_publicly_reachable_location), and then
-* [registering your room with the game](https://book.game-on.org/v/walkthrough/walkthroughs/createRoom.html#_register_your_room).
+* [**hosting your service somewhere with a publicly reachable endpoint**](https://book.gameontext.org/walkthroughs/deployRoom.html), and then
+* [registering your room with the game](https://book.gameontext.org/walkthroughs/registerRoom.html).
 
 ## Build a docker container
 
 Creating a Docker image is straight-up: `docker build .` right from the root menu.
-
-A `docker-compose.yml` file is also there, which can be used to specify overlay volumes to allow local development without restarting the container. See the [Advanced Adventure for local development with Docker](https://book.game-on.org/v/walkthrough/walkthroughs/local-docker.html) for a more detailed walkthrough.
 
 ### List of host provided commands
 

@@ -16,7 +16,7 @@ var sendUnknownType = function(conn, target, username, messageType, logger)
             sendTarget + "," +
             JSON.stringify(messageObject)
 
-  conn.sendText(messageToSend)
+  conn.sendUTF(messageToSend)
 }
 
 module.exports = sendUnknownType;

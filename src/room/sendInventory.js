@@ -16,7 +16,7 @@ var sendInventory = function(conn, target, username, logger)
             sendTarget + "," +
             JSON.stringify(messageObject)
 
-  conn.sendText(messageToSend)
+  conn.sendUTF(messageToSend)
 }
 
 module.exports = sendInventory;

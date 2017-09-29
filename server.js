@@ -24,11 +24,11 @@ var theRoomName = (process.env.ROOM_NAME || '');
 var fullName = (process.env.FULL_NAME || '');
 var description = (process.env.DESCRIPTION || 'This room is filled with little JavaScripts running around everywhere and a monster');
 
-// The hostname of your CF application
+// The environment for the running CF application
 var vcapApplication = (process.env.VCAP_APPLICATION || '{}');
 
 // Automatically retrieves the port of your CF
-var port = (process.env.CF_INSTANCE_PORT || 3000);
+var port = (JSON.parse(vcapApplication).port || 3000);
 var appUris = (JSON.parse(vcapApplication).application_uris || ['localhost:'+port]);
 var endpointip = appUris[0];
 

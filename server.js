@@ -32,7 +32,7 @@ var port = (JSON.parse(vcapApplication).port || 3000);
 var appUris = (JSON.parse(vcapApplication).application_uris || ['localhost:'+port]);
 var endpointip = appUris[0];
 
-var logger = new winston.Logger({
+var logger = winston.createLogger({
     level: 'debug',
     transports: [
         new(winston.transports.Console)(),

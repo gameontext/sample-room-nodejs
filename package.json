@@ -3,15 +3,19 @@
   "description": "Game On! node.js room",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "serve-static": "^1.11.2",
     "finalhandler": "1.0.6",
     "websocket": "^1.0.24",
-    "winston": "*"
+    "winston": "*",
+    "snyk": "^1.319.1"
   },
   "author": "",
   "license": "ISC",
-  "repository": {}
+  "repository": {},
+  "snyk": true
 }
